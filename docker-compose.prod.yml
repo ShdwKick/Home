@@ -1,0 +1,18 @@
+name: bh-home
+
+services:
+  home:
+    image: shadowkick/home:latest
+    container_name: home
+    restart: unless-stopped
+    labels:
+      # Watchtower обновляет контейнер сам, когда в Docker Hub появляется новый
+      # образ — метка строго opt-in, установка: deploy/watchtower-compose.yml
+      # в репозитории Auth.
+      com.centurylinklabs.watchtower.enable: "true"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8794
+    ports:
+      # Только на localhost — наружу отдаёт nginx на 443 (см. deploy/nginx-home-443.conf).
+      - "127.0.0.1:8794:8794"

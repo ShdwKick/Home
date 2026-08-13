@@ -1,0 +1,16 @@
+name: bh-home
+
+services:
+  home:
+    build: .
+    image: shadowkick/home:latest
+    container_name: home
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8794
+    ports:
+      # По умолчанию слушаем только localhost — наружу отдаёт nginx (см. README.md остальных сервисов).
+      - "127.0.0.1:8794:8794"
+
+# Ни базы, ни volume: страница статическая, состояния не хранит.
