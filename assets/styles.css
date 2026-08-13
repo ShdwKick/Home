@@ -125,9 +125,12 @@ body{
 .svc-card:active{transform:translateY(-2px)}
 
 /* Превью-картинка сервиса. Фон под ней — уже градиент цвета сервиса (см.
-   .svc-media-fallback), так что даже долгая загрузка не даёт пустого прямоугольника. */
+   .svc-media-fallback), так что даже долгая загрузка не даёт пустого прямоугольника.
+   Соотношение сторон — почти квадрат: сами скриншоты дашбордов близки к 1:1
+   (обычная страница, не широкий десктопный скролл), а в широкий 16:10 их
+   приходилось обрезать чуть ли не наполовину. */
 .svc-media{
-  position:relative;aspect-ratio:16/10;overflow:hidden;flex:none;
+  position:relative;aspect-ratio:1/1;overflow:hidden;flex:none;
   background:var(--md-sys-color-surface-container-high);
 }
 .svc-media-fallback{
@@ -155,18 +158,30 @@ body{
 .scrim.show{display:grid;animation:fade .15s}
 .dialog{
   background:var(--md-sys-color-surface-container-high);
-  border-radius:var(--r-xl);width:100%;max-width:480px;overflow:hidden;
+  border-radius:var(--r-xl);width:100%;max-width:520px;overflow:hidden;
   animation:pop .25s var(--ease-emph-dec);
   margin:auto;
 }
-.dialog .dlg-media{position:relative;aspect-ratio:16/10;background:var(--md-sys-color-surface-container-high)}
-.dialog .dlg-media .svc-media{position:absolute;inset:0;aspect-ratio:auto}
+/* Здесь картинку не обрезаем — это «подробности», человек пришёл её
+   разглядеть. Показываем целиком в её собственных пропорциях, только
+   ограничиваем высоту, чтобы диалог не улетал за экран. */
+.dialog .dlg-media{
+  position:relative;background:var(--md-sys-color-surface-container-highest,var(--md-sys-color-surface-container-high));
+  display:flex;align-items:center;justify-content:center;max-height:56vh;overflow:hidden;
+}
+.dialog .dlg-media .svc-media{position:static;aspect-ratio:auto;width:100%;display:flex;align-items:center;justify-content:center}
+.dialog .dlg-media .svc-media img{
+  position:relative;z-index:1;
+  max-width:100%;max-height:56vh;width:auto;height:auto;
+  object-fit:contain;display:block;
+}
+.dialog .dlg-media .svc-media-fallback{position:absolute;inset:0}
 .dialog .dlg-body{padding:22px 26px 26px}
 
 .thumbs{display:flex;gap:8px;margin-bottom:16px}
 .svc-thumb{
   all:unset;box-sizing:border-box;cursor:pointer;flex:1;
-  aspect-ratio:16/10;border-radius:var(--r-s);overflow:hidden;
+  aspect-ratio:1/1;border-radius:var(--r-s);overflow:hidden;
   border:2px solid transparent;opacity:.6;transition:opacity .15s,border-color .15s;
 }
 .svc-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
