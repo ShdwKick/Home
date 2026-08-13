@@ -1,0 +1,206 @@
+/* Оформление главной. Токены — те же, что в «Моих финансах» (Material 3,
+   violet seed): это интерфейсный слой, общий для всех сервисов, см.
+   BurningHouse/Design/palette.md. Пламя не переопределяем — дерево/янтарь
+   из brand.css подходит: это точка входа в дом целиком, а не в сервис. */
+
+:root{
+  --md-sys-color-primary:#5b4fe0;
+  --md-sys-color-on-primary:#ffffff;
+  --md-sys-color-primary-container:#e4dfff;
+  --md-sys-color-on-primary-container:#180265;
+  --md-sys-color-secondary-container:#e3e0f9;
+  --md-sys-color-on-secondary-container:#1a1836;
+  --md-sys-color-error:#ba1a1a;
+  --md-sys-color-surface:#fbf8ff;
+  --md-sys-color-on-surface:#1c1b20;
+  --md-sys-color-on-surface-variant:#46464f;
+  --md-sys-color-surface-container-lowest:#ffffff;
+  --md-sys-color-surface-container-low:#f5f2fa;
+  --md-sys-color-surface-container:#efecf4;
+  --md-sys-color-surface-container-high:#e9e6ee;
+  --md-sys-color-outline:#777680;
+  --md-sys-color-outline-variant:#c7c5d0;
+
+  --r-s:8px; --r-m:12px; --r-l:16px; --r-xl:28px; --r-full:9999px;
+  --md-font:"Roboto Flex","Segoe UI",system-ui,Roboto,sans-serif;
+  --ease-std:cubic-bezier(0.2,0,0,1);
+  --ease-emph-dec:cubic-bezier(0.05,0.7,0.1,1);
+  --e1:0 1px 2px rgba(0,0,0,.05),0 2px 6px rgba(0,0,0,.06);
+  --e2:0 2px 6px rgba(0,0,0,.07),0 8px 20px rgba(0,0,0,.08);
+
+  --dark-primary:#c6bfff; --dark-on-primary:#2e1591;
+  --dark-primary-container:#4335a8; --dark-on-primary-container:#e4dfff;
+  --dark-secondary-container:#45435c; --dark-on-secondary-container:#e3e0f9;
+  --dark-error:#ffb4ab;
+  --dark-surface:#141318; --dark-on-surface:#e5e1e9; --dark-on-surface-variant:#c8c5d0;
+  --dark-surface-container-lowest:#0f0e13; --dark-surface-container-low:#1c1b20;
+  --dark-surface-container:#201f25; --dark-surface-container-high:#2b2930;
+  --dark-outline:#918f9a; --dark-outline-variant:#46464f;
+  --dark-e2:0 2px 6px rgba(0,0,0,.3),0 8px 20px rgba(0,0,0,.35);
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --md-sys-color-primary:var(--dark-primary); --md-sys-color-on-primary:var(--dark-on-primary);
+    --md-sys-color-primary-container:var(--dark-primary-container); --md-sys-color-on-primary-container:var(--dark-on-primary-container);
+    --md-sys-color-secondary-container:var(--dark-secondary-container); --md-sys-color-on-secondary-container:var(--dark-on-secondary-container);
+    --md-sys-color-error:var(--dark-error);
+    --md-sys-color-surface:var(--dark-surface); --md-sys-color-on-surface:var(--dark-on-surface); --md-sys-color-on-surface-variant:var(--dark-on-surface-variant);
+    --md-sys-color-surface-container-lowest:var(--dark-surface-container-lowest); --md-sys-color-surface-container-low:var(--dark-surface-container-low);
+    --md-sys-color-surface-container:var(--dark-surface-container); --md-sys-color-surface-container-high:var(--dark-surface-container-high);
+    --md-sys-color-outline:var(--dark-outline); --md-sys-color-outline-variant:var(--dark-outline-variant);
+    --e2:var(--dark-e2);
+  }
+}
+:root[data-theme="dark"]{
+  --md-sys-color-primary:var(--dark-primary); --md-sys-color-on-primary:var(--dark-on-primary);
+  --md-sys-color-primary-container:var(--dark-primary-container); --md-sys-color-on-primary-container:var(--dark-on-primary-container);
+  --md-sys-color-secondary-container:var(--dark-secondary-container); --md-sys-color-on-secondary-container:var(--dark-on-secondary-container);
+  --md-sys-color-error:var(--dark-error);
+  --md-sys-color-surface:var(--dark-surface); --md-sys-color-on-surface:var(--dark-on-surface); --md-sys-color-on-surface-variant:var(--dark-on-surface-variant);
+  --md-sys-color-surface-container-lowest:var(--dark-surface-container-lowest); --md-sys-color-surface-container-low:var(--dark-surface-container-low);
+  --md-sys-color-surface-container:var(--dark-surface-container); --md-sys-color-surface-container-high:var(--dark-surface-container-high);
+  --md-sys-color-outline:var(--dark-outline); --md-sys-color-outline-variant:var(--dark-outline-variant);
+  --e2:var(--dark-e2);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body.scroll-lock{overflow:hidden}
+/* Фон отдан наверх, на html: .bh-backdrop лежит на z-index:-1 и под
+   непрозрачной заливкой body его было бы просто не видно. */
+html{background:var(--md-sys-color-surface)}
+body{
+  font-family:var(--md-font);
+  color:var(--md-sys-color-on-surface);
+  background:transparent;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+/* ===================== ШАПКА ===================== */
+.topbar{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:920px;margin:0 auto;padding:20px 20px 0;
+}
+
+.icon-btn{
+  width:44px;height:44px;border-radius:var(--r-full);
+  border:0;background:transparent;color:var(--md-sys-color-on-surface-variant);
+  cursor:pointer;display:grid;place-items:center;overflow:hidden;position:relative;flex:none;
+}
+.icon-btn::after{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity .2s}
+.icon-btn:hover::after{opacity:.08}
+.icon-btn:active::after{opacity:.12}
+.icon{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ===================== ГЕРОЙ ===================== */
+.hero{
+  position:relative;z-index:1;
+  max-width:920px;margin:0 auto;padding:56px 20px 40px;text-align:center;
+}
+.hero h1{font-size:clamp(28px,4vw,38px);font-weight:650;letter-spacing:-.01em}
+.hero p{margin-top:10px;font-size:15px;color:var(--md-sys-color-on-surface-variant);max-width:44ch;margin-inline:auto}
+
+/* ===================== КАРТОЧКИ СЕРВИСОВ ===================== */
+.grid{
+  position:relative;z-index:1;
+  max-width:1120px;margin:0 auto;padding:0 20px 64px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px;
+}
+
+.svc-card{
+  all:unset;box-sizing:border-box;cursor:pointer;
+  display:flex;flex-direction:column;
+  border-radius:var(--r-xl);overflow:hidden;
+  background:color-mix(in srgb,var(--md-sys-color-surface-container-lowest) 78%,transparent);
+  backdrop-filter:blur(14px) saturate(1.1);
+  border:1px solid var(--md-sys-color-outline-variant);
+  box-shadow:var(--e1);
+  transition:transform .22s var(--ease-emph-dec),box-shadow .22s var(--ease-emph-dec),border-color .22s;
+}
+.svc-card:hover{transform:translateY(-5px);box-shadow:var(--e2);border-color:color-mix(in srgb,var(--svc-tip,var(--md-sys-color-outline)) 45%,var(--md-sys-color-outline-variant))}
+.svc-card:focus-visible{outline:2px solid var(--md-sys-color-primary);outline-offset:3px}
+.svc-card:active{transform:translateY(-2px)}
+
+/* Превью-картинка сервиса. Фон под ней — уже градиент цвета сервиса (см.
+   .svc-media-fallback), так что даже долгая загрузка не даёт пустого прямоугольника. */
+.svc-media{
+  position:relative;aspect-ratio:16/10;overflow:hidden;flex:none;
+  background:var(--md-sys-color-surface-container-high);
+}
+.svc-media-fallback{
+  position:absolute;inset:0;display:grid;place-items:center;
+  background:linear-gradient(160deg,
+    color-mix(in srgb,var(--svc-base) 38%,var(--md-sys-color-surface-container-high)) 0%,
+    color-mix(in srgb,var(--svc-tip) 22%,var(--md-sys-color-surface-container-high)) 100%);
+}
+.svc-media-fallback .bh-mark{width:3em;height:3em;opacity:.85}
+.svc-media img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:top center;display:block;
+}
+
+.svc-body{display:flex;flex-direction:column;gap:12px;padding:22px 24px 26px}
+.svc-card .row{display:flex;align-items:center;gap:12px}
+.svc-card .bh-mark{width:1.9em;height:1.9em;flex:none}
+.svc-card h2{font-size:18px;font-weight:650;letter-spacing:-.005em;flex:1}
+.svc-card .arrow{color:var(--md-sys-color-on-surface-variant);flex:none;transition:transform .22s var(--ease-emph-dec)}
+.svc-card:hover .arrow{transform:translateX(3px)}
+.svc-card .teaser{font-size:14px;line-height:1.5;color:var(--md-sys-color-on-surface-variant)}
+
+/* ===================== МОДАЛКА ===================== */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;place-items:center;z-index:60;padding:16px;overflow-y:auto}
+.scrim.show{display:grid;animation:fade .15s}
+.dialog{
+  background:var(--md-sys-color-surface-container-high);
+  border-radius:var(--r-xl);width:100%;max-width:480px;overflow:hidden;
+  animation:pop .25s var(--ease-emph-dec);
+  margin:auto;
+}
+.dialog .dlg-media{position:relative;aspect-ratio:16/10;background:var(--md-sys-color-surface-container-high)}
+.dialog .dlg-media .svc-media{position:absolute;inset:0;aspect-ratio:auto}
+.dialog .dlg-body{padding:22px 26px 26px}
+
+.thumbs{display:flex;gap:8px;margin-bottom:16px}
+.svc-thumb{
+  all:unset;box-sizing:border-box;cursor:pointer;flex:1;
+  aspect-ratio:16/10;border-radius:var(--r-s);overflow:hidden;
+  border:2px solid transparent;opacity:.6;transition:opacity .15s,border-color .15s;
+}
+.svc-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.svc-thumb:hover{opacity:.9}
+.svc-thumb.active{opacity:1;border-color:var(--md-sys-color-primary)}
+
+.dialog .row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.dialog .bh-mark{width:2.2em;height:2.2em;flex:none}
+.dialog h3{font-size:21px;font-weight:650;letter-spacing:-.005em}
+.dialog .desc{font-size:14.5px;line-height:1.55;color:var(--md-sys-color-on-surface-variant)}
+.dialog .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:24px}
+
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+
+/* ---- buttons ---- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:44px;padding:0 22px;border:0;border-radius:var(--r-full);
+  font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;overflow:hidden;
+  background:transparent;color:var(--md-sys-color-primary);text-decoration:none;
+}
+.btn::after{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity .2s}
+.btn:hover::after{opacity:.08}
+.btn:active::after{opacity:.12}
+.btn.filled{background:var(--md-sys-color-primary);color:var(--md-sys-color-on-primary)}
+.btn.outlined{border:1px solid var(--md-sys-color-outline)}
+
+/* ===================== ФУТЕР ===================== */
+.foot{
+  position:relative;z-index:1;text-align:center;
+  padding:0 20px 32px;font-size:12.5px;color:var(--md-sys-color-on-surface-variant);opacity:.7;
+}
+
+@media (max-width:30rem){
+  .hero{padding-top:44px}
+}
