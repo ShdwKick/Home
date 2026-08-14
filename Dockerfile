@@ -6,6 +6,7 @@ WORKDIR /app
 # один файл на встроенном http, страница статическая, бэкенда нет.
 COPY server.js ./
 COPY index.html ./
+COPY yandex_b35e9d8159f0a00f.html ./
 COPY assets/ ./assets/
 
 RUN set -e; \

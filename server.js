@@ -15,6 +15,11 @@ const HOST = process.env.HOST || "0.0.0.0";
 const PORT = Number(process.env.PORT) || 8794;
 const ROOT = __dirname;
 
+// Разовые файлы-подтверждения для поисковиков/вебмастеров (Яндекс.Вебмастер, Google
+// Search Console и т.п.) — живут в корне репозитория рядом с index.html; каждый новый
+// добавляется явно сюда И явным COPY в Dockerfile, ничего не отдаётся по маске.
+const ROOT_VERIFICATION_FILES = ["yandex_b35e9d8159f0a00f.html"];
+
 const TYPES = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -43,7 +48,7 @@ const server = http.createServer((req, res) => {
   // прочие файлы репозитория снаружи не видны в принципе, а не только пока
   // никто не попытался их запросить нетривиальным путём.
   const rel = pathname === "/" ? "index.html" : pathname.replace(/^\//, "");
-  if (rel !== "index.html" && !rel.startsWith("assets/")) {
+  if (rel !== "index.html" && !rel.startsWith("assets/") && !ROOT_VERIFICATION_FILES.includes(rel)) {
     res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("Not Found");
     return;
   }
