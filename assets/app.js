@@ -65,6 +65,16 @@ const SERVICES = [
     tip: "#4fe3c1",
     shots: ["assets/Images/Trip3.png", "assets/Images/Trip.png", "assets/Images/Trip4.png"],
   },
+  {
+    id: "brain",
+    name: "Пораскинем мозгами?",
+    teaser: "Четырнадцать коротких упражнений на память, внимание и реакцию.",
+    desc: "Упражнения на память, внимание, счёт и гибкость мышления — без регистрации и без сохранения аккаунта. Открыл и играешь.",
+    href: "https://brain.burninghouse.ru",
+    base: "#9d174d",
+    tip: "#ff5c8a",
+    shots: ["assets/Images/Brain1.png", "assets/Images/Brain2.png", "assets/Images/Brain3.png"],
+  },
 ];
 
 /* ---------- знак с цветом конкретного сервиса ----------
@@ -82,8 +92,12 @@ function markSvg(gradId, base, tip) {
 
 /* ---------- превью сервиса: картинка с запасным вариантом ----------
    Пока файла нет (или путь ещё не подставлен) — градиент цвета сервиса со
-   знаком поверх, а не сломанная картинка. */
-function mediaEl(svc, gradId, src) {
+   знаком поверх, а не сломанная картинка.
+   eager — для картинок, которые показываются сразу (модалка): она уже
+   открыта и уже в кадре, а нативный loading="lazy" рассчитан на прокрутку и
+   у только что вставленного в DOM элемента срабатывает не сразу — картинка
+   повисает пустой на несколько секунд, пока с ней никто не взаимодействует. */
+function mediaEl(svc, gradId, src, eager) {
   const wrap = document.createElement("div");
   wrap.className = "svc-media";
   wrap.style.setProperty("--svc-base", svc.base);
@@ -91,7 +105,7 @@ function mediaEl(svc, gradId, src) {
   wrap.innerHTML = `<div class="svc-media-fallback">${markSvg(gradId, svc.base, svc.tip)}</div>`;
   const img = new Image();
   img.alt = "";
-  img.loading = "lazy";
+  img.loading = eager ? "eager" : "lazy";
   img.addEventListener("error", () => img.remove());
   img.src = src;
   wrap.append(img);
@@ -131,7 +145,7 @@ let lastFocused = null;
 
 function openDialog(svc, i) {
   dlgMedia.innerHTML = "";
-  dlgMedia.append(mediaEl(svc, "dlgFlame" + i, svc.shots[0]));
+  dlgMedia.append(mediaEl(svc, "dlgFlame" + i, svc.shots[0], true));
 
   dlgThumbs.innerHTML = "";
   svc.shots.forEach((src, j) => {
@@ -141,13 +155,13 @@ function openDialog(svc, i) {
     t.setAttribute("aria-label", `Скриншот ${j + 1}`);
     const img = new Image();
     img.alt = "";
-    img.loading = "lazy";
+    img.loading = "eager";
     img.addEventListener("error", () => t.remove());
     img.src = src;
     t.append(img);
     t.addEventListener("click", () => {
       dlgMedia.innerHTML = "";
-      dlgMedia.append(mediaEl(svc, "dlgFlame" + i + "-" + j, src));
+      dlgMedia.append(mediaEl(svc, "dlgFlame" + i + "-" + j, src, true));
       dlgThumbs.querySelectorAll(".svc-thumb").forEach(el => el.classList.remove("active"));
       t.classList.add("active");
     });
