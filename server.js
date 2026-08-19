@@ -47,7 +47,12 @@ const server = http.createServer((req, res) => {
   // содержимое assets/ — этого достаточно для всей страницы, а server.js и
   // прочие файлы репозитория снаружи не видны в принципе, а не только пока
   // никто не попытался их запросить нетривиальным путём.
-  const rel = pathname === "/" ? "index.html" : pathname.replace(/^\//, "");
+  // Некоторые краулеры/тулы запрашивают /favicon.ico напрямую с корня,
+  // игнорируя <link rel="icon"> в index.html — отдаём тот же файл, что и
+  // из assets/, без отдельного правила в белом списке ниже.
+  const rel = pathname === "/" ? "index.html"
+    : pathname === "/favicon.ico" ? "assets/favicon.ico"
+    : pathname.replace(/^\//, "");
   if (rel !== "index.html" && !rel.startsWith("assets/") && !ROOT_VERIFICATION_FILES.includes(rel)) {
     res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("Not Found");
     return;
