@@ -15,10 +15,13 @@ const HOST = process.env.HOST || "0.0.0.0";
 const PORT = Number(process.env.PORT) || 8794;
 const ROOT = __dirname;
 
-// Разовые файлы-подтверждения для поисковиков/вебмастеров (Яндекс.Вебмастер, Google
-// Search Console и т.п.) — живут в корне репозитория рядом с index.html; каждый новый
-// добавляется явно сюда И явным COPY в Dockerfile, ничего не отдаётся по маске.
-const ROOT_VERIFICATION_FILES = ["yandex_b35e9d8159f0a00f.html"];
+// Отдельные файлы в корне репозитория рядом с index.html: подтверждения для
+// поисковиков/вебмастеров (Яндекс.Вебмастер, Google Search Console и т.п.) и
+// файлы, которые роботы по конвенции ищут именно в корне сайта, а не там,
+// куда их реально положили (robots.txt, sitemap.xml — как и /favicon.ico
+// выше). Каждый новый добавляется явно сюда И явным COPY в Dockerfile,
+// ничего не отдаётся по маске.
+const ROOT_FILES = ["yandex_b35e9d8159f0a00f.html", "robots.txt", "sitemap.xml"];
 
 const TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -30,6 +33,8 @@ const TYPES = {
   ".jpeg": "image/jpeg",
   ".webp": "image/webp",
   ".ico": "image/x-icon",
+  ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8",
 };
 
 const server = http.createServer((req, res) => {
@@ -53,7 +58,7 @@ const server = http.createServer((req, res) => {
   const rel = pathname === "/" ? "index.html"
     : pathname === "/favicon.ico" ? "assets/favicon.ico"
     : pathname.replace(/^\//, "");
-  if (rel !== "index.html" && !rel.startsWith("assets/") && !ROOT_VERIFICATION_FILES.includes(rel)) {
+  if (rel !== "index.html" && !rel.startsWith("assets/") && !ROOT_FILES.includes(rel)) {
     res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("Not Found");
     return;
   }

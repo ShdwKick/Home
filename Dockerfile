@@ -7,6 +7,8 @@ WORKDIR /app
 COPY server.js ./
 COPY index.html ./
 COPY yandex_b35e9d8159f0a00f.html ./
+COPY robots.txt ./
+COPY sitemap.xml ./
 COPY assets/ ./assets/
 
 RUN set -e; \

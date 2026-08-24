@@ -75,6 +75,16 @@ const SERVICES = [
     tip: "#ff5c8a",
     shots: ["assets/Images/Brain1.png", "assets/Images/Brain2.png", "assets/Images/Brain3.png"],
   },
+  {
+    id: "puzzle",
+    name: "Что собираем?",
+    teaser: "Пазлы прямо в браузере — из своих фото или из библиотеки, одному или с друзьями.",
+    desc: "Библиотека готовых пазлов с фигурными деталями, стол можно зумить и таскать. Играть можно без входа — прогресс хранится в браузере; вошедшие открывают комнаты, собирают пазл вместе с друзьями в реальном времени и могут превратить в пазл любую свою фотографию.",
+    href: "https://puzzle.burninghouse.ru",
+    base: "#3f6212",
+    tip: "#7ddf3c",
+    shots: ["assets/Images/Puzzle1.png", "assets/Images/Puzzle2.png", "assets/Images/Puzzle3.png"],
+  },
 ];
 
 /* ---------- знак с цветом конкретного сервиса ----------
