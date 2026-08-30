@@ -126,11 +126,25 @@ function mediaEl(svc, gradId, src, eager) {
 
 const grid = $("cards");
 SERVICES.forEach((svc, i) => {
-  const card = document.createElement("button");
-  card.type = "button";
+  // <a href> с настоящим URL, не <button> — раньше это была кнопка без href
+  // вовсе, а единственная реальная ссылка на сервис (#svcGo в модалке)
+  // получала href только через JS ПОСЛЕ клика по карточке. Итог: краулер,
+  // который не эмулирует клик (в первую очередь Яндекс), не видел на
+  // главной вообще ни одной исходящей ссылки на сервисы — ни на Puzzle, ни
+  // на остальные (см. план «SEO»). preventDefault в клике сохраняет
+  // прежнее поведение для настоящих пользователей (открывается модалка, не
+  // сразу переход), а сам факт <a href> даёт: 1) ссылку, которую видит
+  // краулер без интерпретации кликов, 2) открытие в новой вкладке средней
+  // кнопкой/Ctrl+клик, 3) «Копировать ссылку» из контекстного меню — ничего
+  // из этого раньше не работало на <button>. .svc-card начинается с
+  // all:unset (см. styles.css) — переключение button→a ничего не меняет
+  // визуально.
+  const card = document.createElement("a");
+  card.href = svc.href;
   card.className = "svc-card";
   card.style.setProperty("--svc-tip", svc.tip);
   card.setAttribute("aria-haspopup", "dialog");
+  card.title = svc.name;
   card.append(mediaEl(svc, "cardFlame" + i, svc.shots[0]));
   const body = document.createElement("div");
   body.className = "svc-body";
@@ -142,7 +156,7 @@ SERVICES.forEach((svc, i) => {
     </div>
     <p class="teaser">${svc.teaser}</p>`;
   card.append(body);
-  card.addEventListener("click", () => openDialog(svc, i));
+  card.addEventListener("click", e => { e.preventDefault(); openDialog(svc, i); });
   grid.append(card);
 });
 
