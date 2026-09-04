@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#150e22">
-<title>BurningHouse — сервисы</title>
-<meta name="description" content="Мои финансы, «Что смотрим?», «Куда поедем?», «Пораскинем мозгами?» и «Что собираем?» — сервисы BurningHouse в одном месте.">
+<title id="pageTitle">BurningHouse — сервисы</title>
+<meta id="metaDescription" name="description" content="Мои финансы, «Что смотрим?», «Куда поедем?», «Пораскинем мозгами?» и «Что собираем?» — сервисы BurningHouse в одном месте.">
 <link rel="canonical" href="https://burninghouse.ru/">
 
 <!-- Векторный фавикон — основной, PNG рядом для тех, кто SVG не берёт
@@ -20,17 +20,17 @@
 <!-- Open Graph / Twitter — без этого ссылка в поиске и при пересылке в
      мессенджеры разворачивается голым текстом, без знака и превью. -->
 <meta property="og:type" content="website">
-<meta property="og:locale" content="ru_RU">
+<meta id="ogLocale" property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://burninghouse.ru/">
 <meta property="og:site_name" content="BurningHouse">
-<meta property="og:title" content="BurningHouse — сервисы">
-<meta property="og:description" content="Мои финансы, «Что смотрим?», «Куда поедем?», «Пораскинем мозгами?» и «Что собираем?» — сервисы BurningHouse в одном месте.">
+<meta id="ogTitle" property="og:title" content="BurningHouse — сервисы">
+<meta id="ogDescription" property="og:description" content="Мои финансы, «Что смотрим?», «Куда поедем?», «Пораскинем мозгами?» и «Что собираем?» — сервисы BurningHouse в одном месте.">
 <meta property="og:image" content="https://burninghouse.ru/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BurningHouse — сервисы">
-<meta name="twitter:description" content="Мои финансы, «Что смотрим?», «Куда поедем?», «Пораскинем мозгами?» и «Что собираем?» — сервисы BurningHouse в одном месте.">
+<meta id="twitterTitle" name="twitter:title" content="BurningHouse — сервисы">
+<meta id="twitterDescription" name="twitter:description" content="Мои финансы, «Что смотрим?», «Куда поедем?», «Пораскинем мозгами?» и «Что собираем?» — сервисы BurningHouse в одном месте.">
 <meta name="twitter:image" content="https://burninghouse.ru/assets/og-image.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,13 +64,16 @@
     </svg>
     <span class="bh-name">BurningHouse</span>
   </a>
-  <button class="icon-btn" id="themeBtn" type="button" title="Сменить тему" aria-label="Сменить тему"></button>
+  <div class="topbar-actions">
+    <button class="icon-btn icon-btn--text" id="langBtn" type="button"></button>
+    <button class="icon-btn" id="themeBtn" type="button" title="Сменить тему" aria-label="Сменить тему"></button>
+  </div>
 </div>
 
 <header class="hero">
-  <h1>Мои сервисы</h1>
-  <p>Небольшие штуки для дома и для друзей. Выберите карточку, чтобы узнать
-    подробнее и перейти.</p>
+  <h1 id="heroTitle">Мои сервисы</h1>
+  <p id="heroText">Небольшие штуки для дома и для друзей. Выберите карточку,
+    чтобы узнать подробнее и перейти.</p>
 </header>
 
 <main class="grid" id="cards" aria-label="Сервисы"></main>

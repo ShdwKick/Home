@@ -85,6 +85,8 @@ body{
   max-width:920px;margin:0 auto;padding:20px 20px 0;
 }
 
+.topbar-actions{display:flex;align-items:center;gap:4px}
+
 .icon-btn{
   width:44px;height:44px;border-radius:var(--r-full);
   border:0;background:transparent;color:var(--md-sys-color-on-surface-variant);
@@ -94,6 +96,10 @@ body{
 .icon-btn:hover::after{opacity:.08}
 .icon-btn:active::after{opacity:.12}
 .icon{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* Переключатель языка — тот же icon-btn, но с надписью «EN»/«RU» вместо
+   значка: своей иконки у языка нет, а буквы понятнее флага (у RU/EN нет
+   единого флага, который не читался бы как политическое заявление). */
+.icon-btn--text{font-size:13px;font-weight:650;letter-spacing:.01em}
 
 /* ===================== ГЕРОЙ ===================== */
 .hero{
